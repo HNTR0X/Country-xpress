@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Country Xpress — ...so sweet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8102E;
+    --red-light: #FF2442;
+    --red-pale: #FFF0F2;
+    --red-pale2: #FFE0E5;
+    --cream: #FDF8F2;
+    --cream2: #F7F0E6;
+    --warm-white: #FFFCF8;
+    --charcoal: #1C1410;
+    --brown: #3D2314;
+    --text: #2A1810;
+    --text-mid: #6B4F42;
+    --text-muted: #A08070;
+    --border: rgba(60,30,20,0.1);
+    --border-red: rgba(200,16,46,0.15);
+    --gold: #D4860A;
+    --gold-light: #FFF3D6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--red);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s ease;
+    mix-blend-mode: normal;
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1.5px solid rgba(200,16,46,0.4);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transition: transform 0.15s ease, border-color 0.2s ease;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(253,248,242,0.96);
+    backdrop-filter: blur(20px);
+    padding: 16px 60px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 30px rgba(0,0,0,0.06);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links {
+    display: flex; gap: 40px; list-style: none; align-items: center;
+  }
+  .nav-links a {
+    color: var(--text-mid);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-order-btn {
+    background: var(--red) !important;
+    color: white !important;
+    padding: 10px 26px;
+    border-radius: 100px;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 20px rgba(200,16,46,0.25);
+  }
+  .nav-order-btn:hover {
+    background: var(--red-light) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(200,16,46,0.3) !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 60px 100px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--red);
+  }
+  .hero-right-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+  }
+  .hero-big-food {
+    font-size: 180px;
+    line-height: 1;
+    filter: drop-shadow(0 20px 60px rgba(0,0,0,0.3));
+    animation: heroFloat 4s ease-in-out infinite;
+  }
+  .hero-right-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px, 60px 60px, 80px 80px;
+  }
+  .hero-right-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    max-width: 280px;
+    line-height: 1.5;
+  }
+  .hero-right-quote strong {
+    color: white;
+    font-style: normal;
+    font-size: 28px;
+    display: block;
+    margin-top: 8px;
+  }
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red-pale);
+    border: 1px solid var(--border-red);
+    color: var(--red);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    width: fit-content;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(52px, 6.5vw, 88px);
+    line-height: 1.0;
+    font-weight: 900;
+    color: var(--charcoal);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.35s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text-mid);
+    max-width: 440px;
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.65s forwards;
+  }
+  .btn-red {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: white;
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 30px rgba(200,16,46,0.3);
+  }
+  .btn-red:hover {
+    background: var(--red-light);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(200,16,46,0.4);
+  }
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    color: var(--text);
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    border: 1.5px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .btn-outline:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+  .hero-trust-avatars {
+    display: flex;
+  }
+  .trust-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2.5px solid white;
+    background: var(--cream2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-right: -10px;
+  }
+  .hero-trust-text {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .hero-trust-text strong {
+    color: var(--text);
+    display: block;
+    font-weight: 600;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+  .scroll-pill {
+    width: 24px;
+    height: 40px;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 6px;
+  }
+  .scroll-pill::after {
+    content: '';
+    width: 4px;
+    height: 8px;
+    background: var(--red);
+    border-radius: 2px;
+    animation: scrollDot 1.5s ease-in-out infinite;
+  }
+
+  /* MARQUEE */
+  .marquee-section {
+    padding: 18px 0;
+    background: var(--charcoal);
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 28px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    flex-shrink: 0;
+  }
+  .marquee-star {
+    color: var(--red);
+    font-size: 8px;
+  }
+
+  /* FEATURES STRIP */
+  .features-strip {
+    background: white;
+    padding: 40px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .features-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 40px;
+    border-right: 1px solid var(--border);
+  }
+  .feature-item:first-child { padding-left: 0; }
+  .feature-item:last-child { border-right: none; }
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--red-pale);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .feature-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .feature-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+
+  /* SECTION STYLES */
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red-pale);
+    color: var(--red);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--charcoal);
+    margin-bottom: 16px;
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    max-width: 520px;
+  }
+
+  /* ABOUT */
+  .about-section {
+    padding: 120px 60px;
+    background: var(--cream);
+    overflow: hidden;
+  }
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    height: 560px;
+  }
+  .about-card-main {
+    width: 340px;
+    height: 420px;
+    background: white;
+    border-radius: 20px;
+    position: absolute;
+    top: 0; left: 0;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+    overflow: hidden;
+  }
+  .about-card-main::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to top, rgba(200,16,46,0.08), transparent);
+  }
+  .about-card-secondary {
+    width: 240px;
+    height: 280px;
+    background: var(--red);
+    border-radius: 16px;
+    position: absolute;
+    bottom: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: white;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(200,16,46,0.3);
+  }
+  .about-card-secondary .big-num {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .about-card-secondary .big-label {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    font-weight: 600;
+  }
+  .about-floating-tag {
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    background: var(--gold-light);
+    border: 1.5px solid rgba(212,134,10,0.2);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: float 3s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  .about-text { }
+  .about-desc {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--text-mid);
+    margin-bottom: 24px;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 48px;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .stat-item {
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* MENU */
+  .menu-section {
+    padding: 120px 60px;
+    background: white;
+  }
+  .menu-inner { max-width: 1200px; margin: 0 auto; }
+  .menu-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .menu-tabs {
+    display: flex;
+    gap: 6px;
+    background: var(--cream);
+    padding: 5px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+  }
+  .menu-tab {
+    padding: 9px 22px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+    border: none;
+    background: none;
+    font-family: 'Outfit', sans-serif;
+  }
+  .menu-tab.active {
+    background: var(--red);
+    color: white;
+    box-shadow: 0 4px 15px rgba(200,16,46,0.3);
+  }
+  .menu-tab:hover:not(.active) { color: var(--text); }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .menu-card {
+    background: var(--warm-white);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    display: none;
+    cursor: pointer;
+  }
+  .menu-card.visible { display: block; }
+  .menu-card:hover {
+    border-color: var(--red);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(200,16,46,0.12);
+  }
+  .menu-card-visual {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 90px;
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-card-visual.main-bg { background: linear-gradient(135deg, #FFF5E0, #FFE8B0); }
+  .menu-card-visual.fast-bg { background: linear-gradient(135deg, #FFE8E0, #FFCFC0); }
+  .menu-card-visual.bakery-bg { background: linear-gradient(135deg, #E8F4E8, #C8E8C0); }
+  .menu-card-body { padding: 22px; }
+  .menu-card-cat {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .menu-card-name {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .menu-card-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .menu-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .menu-card-price {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--charcoal);
+  }
+  .menu-card-price span {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+  }
+  .menu-add-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    font-family: 'Outfit', sans-serif;
+    flex-shrink: 0;
+    box-shadow: 0 4px 15px rgba(200,16,46,0.3);
+  }
+  .menu-add-btn:hover {
+    background: var(--red-light);
+    transform: scale(1.1);
+  }
+
+  /* GALLERY */
+  .gallery-section {
+    padding: 120px 60px;
+    background: var(--cream);
+  }
+  .gallery-inner { max-width: 1200px; margin: 0 auto; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 260px 260px;
+    gap: 14px;
+    margin-top: 56px;
+  }
+  .g-item {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .g-item:nth-child(1) { grid-column: 1/6; grid-row: 1/2; }
+  .g-item:nth-child(2) { grid-column: 6/9; grid-row: 1/2; }
+  .g-item:nth-child(3) { grid-column: 9/13; grid-row: 1/3; }
+  .g-item:nth-child(4) { grid-column: 1/4; grid-row: 2/3; }
+  .g-item:nth-child(5) { grid-column: 4/9; grid-row: 2/3; }
+  .g-emoji {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease;
+  }
+  .g-item:nth-child(1) .g-emoji { background: linear-gradient(135deg, #FF6B2B, #FF9500); font-size: 120px; }
+  .g-item:nth-child(2) .g-emoji { background: linear-gradient(135deg, #C8102E, #FF2442); font-size: 80px; }
+  .g-item:nth-child(3) .g-emoji { background: linear-gradient(135deg, #1C3A1C, #2D5A2D); font-size: 100px; }
+  .g-item:nth-child(4) .g-emoji { background: linear-gradient(135deg, #8B4513, #D2691E); font-size: 70px; }
+  .g-item:nth-child(5) .g-emoji { background: linear-gradient(135deg, #F5A623, #F7C94B); font-size: 100px; }
+  .g-item:hover .g-emoji { transform: scale(1.08); }
+  .g-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+  .g-item:hover .g-overlay { opacity: 1; }
+  .g-label {
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* TESTIMONIALS */
+  .reviews-section {
+    padding: 100px 60px;
+    background: white;
+    overflow: hidden;
+  }
+  .reviews-inner { max-width: 1200px; margin: 0 auto; }
+  .reviews-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .review-card {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    transition: all 0.3s;
+  }
+  .review-card:hover {
+    border-color: var(--border-red);
+    box-shadow: 0 10px 40px rgba(200,16,46,0.08);
+    transform: translateY(-4px);
+  }
+  .review-stars {
+    font-size: 16px;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  .review-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--brown);
+    margin-bottom: 24px;
+  }
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--red-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: 2px solid var(--border-red);
+  }
+  .review-name { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+  .review-handle { font-size: 12px; color: var(--text-muted); }
+
+  /* ORDER */
+  .order-section {
+    padding: 120px 60px;
+    background: var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+  .order-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.06) 1px, transparent 1px),
+      radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 50px 50px, 70px 70px;
+  }
+  .order-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+  }
+  .order-text {}
+  .order-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .order-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(40px, 5vw, 60px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  .order-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .order-platforms-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .platform-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    color: var(--charcoal);
+    padding: 18px 24px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  .platform-btn:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  }
+  .platform-btn .p-icon { font-size: 30px; }
+  .platform-btn .p-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+  .platform-btn .p-arrow {
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 18px;
+    transition: transform 0.3s;
+  }
+  .platform-btn:hover .p-arrow { transform: translateX(4px); }
+  .order-right-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .order-bowl {
+    font-size: 160px;
+    filter: drop-shadow(0 20px 60px rgba(0,0,0,0.2));
+    animation: heroFloat 3s ease-in-out infinite;
+  }
+
+  /* LOCATION */
+  .location-section {
+    padding: 120px 60px;
+    background: var(--cream);
+  }
+  .location-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .location-map-box {
+    height: 420px;
+    background: white;
+    border-radius: 24px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  .location-map-visual {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #FFF8F0, #FFE8D0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+  }
+  .map-dots {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(200,16,46,0.12) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .location-pin {
+    width: 56px;
+    height: 56px;
+    background: var(--red);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 10px 30px rgba(200,16,46,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .location-pin::after {
+    content: '📍';
+    transform: rotate(45deg);
+    font-size: 20px;
+    position: absolute;
+  }
+  .location-name-tag {
+    background: white;
+    border-radius: 12px;
+    padding: 14px 24px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 2;
+  }
+  .location-name-tag strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 4px;
+  }
+  .location-name-tag span {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .location-details { }
+  .location-detail-row {
+    display: flex;
+    gap: 18px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .location-detail-row:last-of-type { border-bottom: none; }
+  .det-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--red-pale);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    border: 1px solid var(--border-red);
+  }
+  .det-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .det-value {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.6;
+    font-weight: 500;
+  }
+  .directions-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 28px;
+    transition: all 0.3s;
+    box-shadow: 0 6px 20px rgba(200,16,46,0.3);
+  }
+  .directions-link:hover {
+    background: var(--red-light);
+    transform: translateY(-2px);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    padding: 80px 60px 40px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 2px;
+    color: white;
+    margin-bottom: 12px;
+  }
+  .footer-brand span { color: var(--red); }
+  .footer-tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 24px;
+  }
+  .footer-brand-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.8;
+    max-width: 280px;
+    margin-bottom: 28px;
+  }
+  .footer-socials { display: flex; gap: 10px; }
+  .fsocial {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.3s;
+  }
+  .fsocial:hover { border-color: var(--red); color: var(--red); }
+  .footer-col-title {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--red); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+  .footer-bottom a { color: var(--red); text-decoration: none; }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.12s; }
+  .reveal-delay-2 { transition-delay: 0.24s; }
+  .reveal-delay-3 { transition-delay: 0.36s; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes scrollDot {
+    0%, 100% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0.3; transform: translateY(8px); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: rotate(-45deg) translateY(0); }
+    50% { transform: rotate(-45deg) translateY(-8px); }
+  }
+
+  /* ORDER MODAL */
+  .order-modal {
+    position: fixed; inset: 0;
+    background: rgba(28,20,16,0.7);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+  .order-modal.open { display: flex; }
+  .modal-box {
+    background: white;
+    border-radius: 24px;
+    padding: 48px;
+    max-width: 440px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    animation: fadeUp 0.4s ease;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.2);
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    background: none; border: none;
+    color: var(--text-muted); font-size: 20px;
+    cursor: pointer; transition: color 0.3s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .modal-close:hover { color: var(--red); }
+  .modal-title {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+  }
+  .modal-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 32px; }
+  .modal-btns { display: flex; flex-direction: column; gap: 10px; }
+  .modal-btn {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    border: 1.5px solid var(--border);
+    background: var(--warm-white);
+    color: var(--charcoal);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    transition: all 0.3s;
+    text-align: left;
+  }
+  .modal-btn:hover {
+    border-color: var(--red);
+    background: var(--red-pale);
+  }
+  .modal-btn .mb-icon { font-size: 28px; }
+  .modal-btn .mb-sub { font-size: 11px; color: var(--text-muted); font-weight: 400; display: block; }
+  .modal-btn .mb-arr { margin-left: auto; color: var(--text-muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { height: 340px; }
+    .about-inner { grid-template-columns: 1fr; }
+    .about-visual { height: 400px; }
+    .order-inner { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .location-inner { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .feature-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 0; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .hero-left { padding: 120px 24px 60px; }
+    .about-section, .menu-section, .gallery-section, .reviews-section, .order-section, .location-section { padding: 80px 24px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .g-item:nth-child(1), .g-item:nth-child(2), .g-item:nth-child(3), .g-item:nth-child(4), .g-item:nth-child(5) {
+      grid-column: auto; grid-row: auto; height: 180px;
+    }
+    .menu-grid { grid-template-columns: 1fr; }
+    .features-strip { padding: 30px 24px; }
+    .about-stats { grid-template-columns: 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    .menu-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- MODAL -->
+<div class="order-modal" id="orderModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="font-size:52px;margin-bottom:16px;">🍛</div>
+    <div class="modal-title">Order Now</div>
+    <div class="modal-sub">Pick your favourite platform</div>
+    <div class="modal-btns">
+      <a href="https://chowdeck.com" target="_blank" class="modal-btn">
+        <span class="mb-icon">🟠</span>
+        <div><div>Chowdeck</div><span class="mb-sub">Fast delivery to your door</span></div>
+        <span class="mb-arr">→</span>
+      </a>
+      <a href="https://glovo.com" target="_blank" class="modal-btn">
+        <span class="mb-icon">🟡</span>
+        <div><div>Glovo</div><span class="mb-sub">Quick & reliable delivery</span></div>
+        <span class="mb-arr">→</span>
+      </a>
+      <a href="https://wa.me/2348000000000" target="_blank" class="modal-btn" style="border-color:rgba(37,211,102,0.3);">
+        <span class="mb-icon">💬</span>
+        <div><div>WhatsApp</div><span class="mb-sub">Message us directly</span></div>
+        <span class="mb-arr">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo" style="padding:0;line-height:0;"><img src="images/logo.png" alt="Country Xpress" style="height:44px;width:auto;max-width:180px;object-fit:contain;display:block;"></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#location">Find Us</a></li>
+    <li><a href="#order" class="nav-order-btn">Order Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <img src="images/logo.png" alt="Country Xpress" style="height:60px;width:auto;max-width:260px;object-fit:contain;margin-bottom:20px;display:block;opacity:0;animation:fadeUp 0.7s ease 0.1s forwards;">
+    <div class="hero-pill">📍 Ibadan, Oyo State — Now on Chowdeck & Glovo</div>
+    <h1 class="hero-title">
+      Nigerian Food,<br>
+      <em>Done Right.</em>
+    </h1>
+    <p class="hero-desc">Bold flavours, generous portions and genuine love in every plate. Country Xpress is Ibadan's go-to for smoky jollof rice, crispy shawarma, juicy burgers and so much more.</p>
+    <div class="hero-ctas">
+      <a href="#menu" class="btn-red">🍛 See the Menu</a>
+      <a href="#" class="btn-outline" onclick="openModal(); return false;">Order Now →</a>
+    </div>
+    <div class="hero-trust">
+      <div class="hero-trust-avatars">
+        <div class="trust-avatar">😋</div>
+        <div class="trust-avatar">🥰</div>
+        <div class="trust-avatar">🤩</div>
+        <div class="trust-avatar">😍</div>
+      </div>
+      <div class="hero-trust-text">
+        <strong>Loved by Ibadan</strong>
+        Rated 5⭐ on Google Maps
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-pill"></div>
+      Scroll to explore
+    </div>
+  </div>
+  <div class="hero-right" style="position:relative;">
+    <div style="position:absolute;inset:0;background:url('images/aerial.jpg') center center/cover no-repeat;opacity:0.35;"></div>
+    <div class="hero-right-pattern"></div>
+    <div class="hero-right-inner">
+      <img src="images/restaurant.jpg" alt="Jollof Rice and Chicken" style="width:340px;height:340px;object-fit:cover;border-radius:50%;border:4px solid rgba(255,255,255,0.2);box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:heroFloat 4s ease-in-out infinite;">
+      <div class="hero-right-quote">
+        Every bite tells a story
+        <strong>...so sweet</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>JOLLOF RICE</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>FRIED RICE</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>COUNTRY SHAWARMA</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>COUNTRY BURGER</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>GRILLED MEAT</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>MEAT PIE</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>SAUSAGE ROLL</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>FRESH BREAD</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>ICE CREAM</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>JOLLOF RICE</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>FRIED RICE</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>COUNTRY SHAWARMA</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>COUNTRY BURGER</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>GRILLED MEAT</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>MEAT PIE</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>SAUSAGE ROLL</span><span class="marquee-star">★</span></div>
+    <div class="marquee-item"><span>FRESH BREAD</span><span class="marquee-star">★</span></div>
+  </div>
+</div>
+
+<!-- FEATURES STRIP -->
+<div class="features-strip">
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feature-icon">🔥</div>
+      <div>
+        <div class="feature-label">Cooked Daily</div>
+        <div class="feature-value">Fresh Every Day</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🛵</div>
+      <div>
+        <div class="feature-label">Delivery</div>
+        <div class="feature-value">Chowdeck & Glovo</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">⭐</div>
+      <div>
+        <div class="feature-label">Google Rating</div>
+        <div class="feature-value">5 Stars</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">📍</div>
+      <div>
+        <div class="feature-label">Location</div>
+        <div class="feature-value">Akala Expy, Ibadan</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-card-main" style="padding:0;overflow:hidden;">
+        <img src="images/rice_meat.jpg" alt="Country Donut" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="about-card-secondary" style="padding:0;overflow:hidden;background:none;box-shadow:0 20px 60px rgba(0,0,0,0.35);">
+        <img src="images/donut.jpg" alt="Country Xpress Restaurant" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="about-floating-tag">🔥 Fan Favourite Jollof</div>
+    </div>
+    <div class="about-text">
+      <div class="section-tag">🍴 Our Story</div>
+      <h2 class="section-title reveal">Born in <em>Ibadan.</em><br>Made to <em>Satisfy.</em></h2>
+      <p class="about-desc reveal">Country Xpress started with one simple mission — serve bold, authentic Nigerian food that feels like home. Every dish is made from scratch, seasoned with love, and served with pride.</p>
+      <p class="about-desc reveal reveal-delay-1">Whether you're stopping by our spot on the Akala Expressway or ordering from home via Chowdeck or Glovo, you get the same generous, flavour-packed experience every single time.</p>
+      <div class="about-stats reveal reveal-delay-2">
+        <div class="stat-item">
+          <div class="stat-number">11+</div>
+          <div class="stat-label">Menu Items</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">5⭐</div>
+          <div class="stat-label">Google Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="menu-inner">
+    <div class="menu-header">
+      <div>
+        <div class="section-tag">🍽️ What We Serve</div>
+        <h2 class="section-title reveal" style="margin-bottom:0;">Our <em>Menu</em></h2>
+      </div>
+      <div class="menu-tabs reveal">
+        <button class="menu-tab active" onclick="filterMenu('all',this)">All Items</button>
+        <button class="menu-tab" onclick="filterMenu('main',this)">Main Meals</button>
+        <button class="menu-tab" onclick="filterMenu('fast',this)">Fast Food</button>
+        <button class="menu-tab" onclick="filterMenu('bakery',this)">Bakeries</button>
+      </div>
+    </div>
+    <div class="menu-grid">
+      <!-- MAIN -->
+      <div class="menu-card visible" data-cat="main">
+        <div class="menu-card-visual main-bg" style="padding:0;overflow:hidden;"><img src="images/rice_meat.jpg" alt="Jollof Fried Rice and Meat" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Main Meal</div>
+          <div class="menu-card-name">Jollof / Fried Rice & Meat</div>
+          <div class="menu-card-desc">Smoky jollof or fried rice with perfectly seasoned grilled meat.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦2,000</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="main">
+        <div class="menu-card-visual main-bg" style="padding:0;overflow:hidden;"><img src="images/rice_chicken.jpg" alt="Jollof Fried Rice and Chicken" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Main Meal</div>
+          <div class="menu-card-name">Jollof / Fried Rice & Chicken</div>
+          <div class="menu-card-desc">Rich jollof or fried rice with juicy, well-seasoned chicken.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦2,200</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="main">
+        <div class="menu-card-visual main-bg" style="padding:0;overflow:hidden;"><img src="images/rice_fish.jpg" alt="Jollof Fried Rice and Fish" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Main Meal</div>
+          <div class="menu-card-name">Jollof / Fried Rice & Fish</div>
+          <div class="menu-card-desc">Fan-favourite combo with fresh panla fish — delicious every time.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦3,200</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <!-- FAST FOOD -->
+      <div class="menu-card visible" data-cat="fast">
+        <div class="menu-card-visual fast-bg" style="padding:0;overflow:hidden;"><img src="images/burger_coke.jpg" alt="Country Burger + Coca-Cola" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Fast Food</div>
+          <div class="menu-card-name">Country Burger + Coca‑Cola</div>
+          <div class="menu-card-desc">Crispy chicken burger with a cold Coca-Cola. The ultimate combo.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦3,500</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="fast">
+        <div class="menu-card-visual fast-bg" style="padding:0;overflow:hidden;"><img src="images/burger.jpg" alt="Country Burger" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Fast Food</div>
+          <div class="menu-card-name">Country Burger with Cheese</div>
+          <div class="menu-card-desc">Delicious chicken burger loaded with melted cheese and fresh toppings.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦3,000</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="fast">
+        <div class="menu-card-visual fast-bg" style="padding:0;overflow:hidden;"><img src="images/shawarma.jpg" alt="Country Shawarma" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Fast Food</div>
+          <div class="menu-card-name">Country Shawarma</div>
+          <div class="menu-card-desc">Roasted chicken shawarma in soft flatbread with veggies and sauce.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦3,000</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <!-- BAKERIES -->
+      <div class="menu-card visible" data-cat="bakery">
+        <div class="menu-card-visual bakery-bg" style="padding:0;overflow:hidden;"><img src="images/chicken_pie.jpg" alt="Country Chicken Pie" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Bakery</div>
+          <div class="menu-card-name">Country Chicken Pie</div>
+          <div class="menu-card-desc">Freshly baked golden chicken pie — flaky, buttery and irresistible.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦800</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="bakery">
+        <div class="menu-card-visual bakery-bg" style="padding:0;overflow:hidden;"><img src="images/meat_pie.jpg" alt="Country Meat Pie" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Bakery</div>
+          <div class="menu-card-name">Country Meat Pie</div>
+          <div class="menu-card-desc">Freshly baked meat pie with a crispy crust and generous filling.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦800</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="bakery">
+        <div class="menu-card-visual bakery-bg" style="padding:0;overflow:hidden;"><img src="images/donut.jpg" alt="Country Donut" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Bakery</div>
+          <div class="menu-card-name">Country Donut</div>
+          <div class="menu-card-desc">Soft, freshly baked donut — the perfect sweet treat any time of day.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦500</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="bakery">
+        <div class="menu-card-visual bakery-bg" style="padding:0;overflow:hidden;"><img src="images/sausage_roll.jpg" alt="Country Sausage Roll" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Bakery</div>
+          <div class="menu-card-name">Country Sausage Roll</div>
+          <div class="menu-card-desc">Flaky pastry around a savoury sausage filling — baked fresh daily.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦500</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="bakery">
+        <div class="menu-card-visual bakery-bg" style="padding:0;overflow:hidden;"><img src="images/bread.jpg" alt="Country Bread" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Bakery</div>
+          <div class="menu-card-name">Country Bread</div>
+          <div class="menu-card-desc">Freshly baked soft bread — great on its own or alongside any meal.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">₦1,400</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <!-- ICE CREAM -->
+      <div class="menu-card visible" data-cat="extras">
+        <div class="menu-card-visual" style="padding:0;overflow:hidden;background:#f0f0f0;">
+          <img src="images/ice_cream.jpg" alt="Country Ice Cream" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Extras</div>
+          <div class="menu-card-name">Ice Cream — 1 Litre</div>
+          <div class="menu-card-desc">Creamy coconut-flavoured ice cream. A perfect sweet finish to any meal.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">&#8358;2,750</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="extras">
+        <div class="menu-card-visual" style="padding:0;overflow:hidden;background:#f0f0f0;">
+          <img src="images/ice_cream.jpg" alt="Country Ice Cream Half Bowl" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Extras</div>
+          <div class="menu-card-name">Ice Cream — 1/2 Bowl</div>
+          <div class="menu-card-desc">Half bowl of our smooth, creamy coconut ice cream. Cold, sweet, satisfying.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">&#8358;1,750</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="extras">
+        <div class="menu-card-visual" style="padding:0;overflow:hidden;background:#f0f0f0;">
+          <img src="images/ice_cream.jpg" alt="Country Ice Cream Quarter Bowl" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-cat">Extras</div>
+          <div class="menu-card-name">Ice Cream — 1/4 Bowl</div>
+          <div class="menu-card-desc">A small scoop of coconut ice cream — great as a light dessert or a treat.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">&#8358;750</div>
+            <button class="menu-add-btn" onclick="openModal()">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-inner">
+    <div style="text-align:center;" class="reveal">
+      <div class="section-tag" style="margin:0 auto 20px;">📸 Food Gallery</div>
+      <h2 class="section-title">Feast Your <em>Eyes</em></h2>
+      <p class="section-sub" style="margin:0 auto;">Every dish is made to look as good as it tastes. Follow us on Instagram for daily food content.</p>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="g-item">
+        <img src="images/meat_pie.jpg" alt="Country Meat Pie" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;">
+        <div class="g-overlay"><div class="g-label">Country Meat Pie</div></div>
+      </div>
+      <div class="g-item">
+        <img src="images/shawarma.jpg" alt="Country Shawarma" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;">
+        <div class="g-overlay"><div class="g-label">Country Shawarma</div></div>
+      </div>
+      <div class="g-item">
+        <img src="images/chicken_pie.jpg" alt="Country Chicken Pie" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;">
+        <div class="g-overlay"><div class="g-label">Country Chicken Pie</div></div>
+      </div>
+      <div class="g-item">
+        <img src="images/restaurant.jpg" alt="Our Restaurant" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform 0.5s ease;">
+        <div class="g-overlay"><div class="g-label">Our Restaurant</div></div>
+      </div>
+      <div class="g-item">
+        <img src="images/burger.jpg" alt="Country Burger" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;">
+        <div class="g-overlay"><div class="g-label">Country Burger</div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;" class="reveal">
+      <a href="https://www.instagram.com/countryxpress.ng" target="_blank" class="btn-red" style="display:inline-flex;">
+        📸 Follow @countryxpress.ng
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-header reveal">
+      <div class="section-tag" style="margin:0 auto 20px;">💬 Reviews</div>
+      <h2 class="section-title">What People <em>Say</em></h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"The jollof rice here is on another level. Smoky, flavourful, generous portions. This is the real deal right here in Ibadan!"</p>
+        <div class="review-author">
+          <div class="review-avatar">😋</div>
+          <div>
+            <div class="review-name">Tunde A.</div>
+            <div class="review-handle">Google Review</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-1">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Country Xpress shawarma is the best in Ibadan, no competition. The roasted chicken inside is so juicy. I order every week!"</p>
+        <div class="review-author">
+          <div class="review-avatar">🥰</div>
+          <div>
+            <div class="review-name">Amara O.</div>
+            <div class="review-handle">Google Review</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-2">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Their meat pie alone is worth the trip. Freshly baked, piping hot, and so affordable. The whole family loves Country Xpress!"</p>
+        <div class="review-author">
+          <div class="review-avatar">🤩</div>
+          <div>
+            <div class="review-name">Kemi S.</div>
+            <div class="review-handle">Google Review</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="order-section" id="order">
+  <div class="order-inner">
+    <div class="order-text reveal">
+      <div class="order-tag">🚀 Order Online</div>
+      <h2 class="order-title">Hungry?<br>We Deliver.</h2>
+      <p class="order-desc">Get your favourite Country Xpress meals delivered fast, right to your door anywhere in Ibadan.</p>
+      <div class="order-platforms-stack">
+        <a href="https://chowdeck.com" target="_blank" class="platform-btn">
+          <span class="p-icon">🟠</span>
+          <div><div>Chowdeck</div><span class="p-sub">Fast delivery to your door</span></div>
+          <span class="p-arrow">→</span>
+        </a>
+        <a href="https://glovo.com" target="_blank" class="platform-btn">
+          <span class="p-icon">🟡</span>
+          <div><div>Glovo</div><span class="p-sub">Quick and reliable delivery</span></div>
+          <span class="p-arrow">→</span>
+        </a>
+        <a href="https://wa.me/2348000000000" target="_blank" class="platform-btn">
+          <span class="p-icon">💬</span>
+          <div><div>WhatsApp</div><span class="p-sub">Message us directly</span></div>
+          <span class="p-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="order-right-visual reveal reveal-delay-2">
+      <img src="images/burger.jpg" alt="Jollof Rice and Meat" style="width:320px;height:320px;object-fit:cover;border-radius:50%;border:4px solid rgba(255,255,255,0.25);box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:heroFloat 3s ease-in-out infinite;">
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section" id="location">
+  <div class="location-inner">
+    <div class="reveal">
+      <div class="section-tag">📍 Find Us</div>
+      <h2 class="section-title">Come Visit <em>Us</em></h2>
+      <div>
+        <div class="location-detail-row">
+          <div class="det-icon">📍</div>
+          <div>
+            <div class="det-label">Address</div>
+            <div class="det-value">600 Ona Elewe Rd, Opp Tipper Garage,<br>Akala Express Way, Ibadan, Oyo State</div>
+          </div>
+        </div>
+        <div class="location-detail-row">
+          <div class="det-icon">🕐</div>
+          <div>
+            <div class="det-label">Opening Hours</div>
+            <div class="det-value">Monday – Sunday · Open Daily</div>
+          </div>
+        </div>
+        <div class="location-detail-row">
+          <div class="det-icon">🛵</div>
+          <div>
+            <div class="det-label">Delivery Platforms</div>
+            <div class="det-value">Chowdeck & Glovo</div>
+          </div>
+        </div>
+        <div class="location-detail-row">
+          <div class="det-icon">📱</div>
+          <div>
+            <div class="det-label">Social Media</div>
+            <div class="det-value">@countryxpress.ng on Instagram & TikTok</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://maps.app.goo.gl/dER61ptkzfNvaDn67" target="_blank" class="directions-link">
+        🗺 Get Directions on Google Maps
+      </a>
+    </div>
+    <div class="location-map-box reveal reveal-delay-2">
+      <div class="location-map-visual">
+        <div class="map-dots"></div>
+        <div class="location-pin"></div>
+        <div class="location-name-tag">
+          <strong>Country Xpress</strong>
+          <span>Akala Expressway, Ibadan · <span style="color:var(--red);">...so sweet</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand" style="line-height:0;margin-bottom:16px;">
+          <img src="images/logo_footer.png" alt="Country Xpress" style="height:70px;width:auto;display:block;">
+        </div>
+        <p class="footer-brand-desc">Bold Nigerian street food served fresh daily. Ibadan's favourite spot for jollof rice, shawarma, burgers and more.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/countryxpress.ng" target="_blank" class="fsocial">IG</a>
+          <a href="https://www.tiktok.com/@countryxpress.ng" target="_blank" class="fsocial">TK</a>
+          <a href="https://wa.me/2348000000000" target="_blank" class="fsocial">WA</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Menu</div>
+        <ul class="footer-links">
+          <li><a href="#menu">Main Meals</a></li>
+          <li><a href="#menu">Fast Food</a></li>
+          <li><a href="#menu">Bakeries</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Order</div>
+        <ul class="footer-links">
+          <li><a href="https://chowdeck.com" target="_blank">Chowdeck</a></li>
+          <li><a href="https://glovo.com" target="_blank">Glovo</a></li>
+          <li><a href="https://wa.me/2348000000000" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit</div>
+        <ul class="footer-links">
+          <li><a href="#location">Our Location</a></li>
+          <li><a href="https://www.instagram.com/countryxpress.ng" target="_blank">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@countryxpress.ng" target="_blank">TikTok</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Country Xpress. All rights reserved.</span>
+      <span>Made with ❤️ in <a href="#home">Ibadan</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top = my - 5 + 'px';
+
+    // Detect background color under cursor and switch dot color
+    const el = document.elementFromPoint(mx, my);
+    if (el) {
+      const bg = window.getComputedStyle(el).backgroundColor;
+      // Check if element or any close ancestor is a red/dark background
+      const isOnDark = isDarkOrRed(el);
+      cursor.style.background = isOnDark ? '#ffffff' : 'var(--red)';
+      ring.style.borderColor = isOnDark ? 'rgba(255,255,255,0.7)' : 'rgba(200,16,46,0.5)';
+    }
+  });
+
+  function isDarkOrRed(el) {
+    let node = el;
+    for (let i = 0; i < 5; i++) {
+      if (!node || node === document.body) break;
+      const bg = window.getComputedStyle(node).backgroundColor;
+      if (!bg || bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)') {
+        node = node.parentElement;
+        continue;
+      }
+      const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (match) {
+        const r = +match[1], g = +match[2], b = +match[3];
+        // Luminance check — low = dark, or red-dominant
+        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+        const isRed = r > 150 && g < 80 && b < 80;
+        if (lum < 100 || isRed) return true;
+      }
+      node = node.parentElement;
+    }
+    return false;
+  }
+
+  setInterval(() => {
+    rx += (mx - rx) * 0.35; ry += (my - ry) * 0.35;
+    ring.style.left = rx - 16 + 'px'; ring.style.top = ry - 16 + 'px';
+  }, 16);
+
+  document.querySelectorAll('a, button, .menu-card, .g-item, .review-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2.5)';
+      ring.style.transform = 'scale(1.6)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+    });
+  });
+
+  // NAVBAR
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // SCROLL REVEAL
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+  // MENU FILTER
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.menu-card').forEach(card => {
+      card.classList.toggle('visible', cat === 'all' || card.dataset.cat === cat);
+    });
+  }
+
+  // MODAL
+  function openModal() {
+    document.getElementById('orderModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('orderModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('orderModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
